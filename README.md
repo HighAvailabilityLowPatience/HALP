@@ -34,7 +34,7 @@ These achievements mark the first step in building practical skills in networkin
 
 📂 Current Version
 
-Network Diagram V1: [Insert file link or path here]
+Network Diagram V1: docs/NETWORK DIAGRAM V1.drawio.svg
 
 🔧 Tools & Tech
 
