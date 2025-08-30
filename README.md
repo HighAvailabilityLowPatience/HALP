@@ -20,7 +20,7 @@ Containerization and CI/CD
 
 MLOps
 
-Create a demonstrable portfolio of enterprise-style IT environments for recruiters and LinkedIn.
+Create a demonstrable portfolio of my skills.
 
 ✅ Week 1 Wins
 
