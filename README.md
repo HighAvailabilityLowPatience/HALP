@@ -32,12 +32,31 @@ Hypervisor Access: Full access to create, manage, and interconnect VMs directly 
 
 These achievements mark the first step in building practical skills in networking, virtualization, and lab management.
 
-📂 Current Version
 
-Network Diagram V1: networking/NETWORK DIAGRAM V1.drawio.svg
+✅ **Week 2 Wins**
+- Configured Cisco router and switch with VLANs for mini PCs.  
+- Replaced old AP with TP-Link Bravo Echo 6500 to solve PoE and double NAT issues.  
+- Troubleshot Cisco + TP-Link compatibility quirks, verified PCs stayed functional.  
+- Backed up all configs and pushed encrypted version to GitHub.  
+- Learned the importance of device compatibility, subnet stability, and simplifying SSIDs.  
 
-🔧 Tools & Tech
+---
 
-Proxmox VE – Virtualization platform
+✅ **Week 3 Wins**
+- Isolated IoT devices from the internal network, verified segmentation with pings.  
+- Hardened network by disabling unnecessary ping/discovery responses.  
+- Configured VPN server + TunnelBlick client with cert-based auth (still testing external access).  
+- Deployed first Windows Server VM, resolved driver/boot order issues, and set DNS/DHCP properly.  
+- Reinforced lessons in persistence, troubleshooting, and the importance of details.  
 
-Enterprise-style networking concepts
+
+
+📂 **Current Version**
+- Network Diagram V2: `networking/NETWORK DIAGRAM V2.svg`
+
+🔧 **Tools & Tech**
+- Proxmox VE – Virtualization platform  
+- Cisco networking gear  
+- TP-Link Bravo Echo 6500  
+- VPN + Windows Server (initial deployment)  
+
