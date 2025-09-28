@@ -60,3 +60,42 @@ These achievements mark the first step in building practical skills in networkin
 - TP-Link Bravo Echo 6500  
 - VPN + Windows Server (initial deployment)  
 
+** Week 4 Update
+
+Week 4 focused on network roles, IP management, and remote access configuration:
+
+Windows Server DHCP cleanup: Removed the DHCP role to prevent the server from handing out IPs incorrectly. Rebooted the router and adjusted the IP address pool to ensure proper network isolation.
+
+Windows Server IP configuration: Assigned the server to a specific IP lane to maintain consistent routing and network segmentation.
+
+Ubuntu Server deployment: Created a new VM, assigned a static IP, and enabled SSH for remote management.
+
+Remote development setup: Added a new VS Code Remote SSH connection to manage the Ubuntu server. Configured UFW to restrict access to the internal network and VPN only.
+
+DNS setup: Configured Windows Server DNS alpha records to resolve Proxmox hypervisors (proxmox1.virio.local, proxmox2.virio.local) and the dev VM (dev.virio.local).
+
+✅ Takeaways:
+
+Proper DHCP management is critical for network segmentation.
+
+Static IPs and reserved addresses simplify service connectivity.
+
+SSH and firewall rules ensure secure remote access.
+
+DNS configuration enables consistent, predictable network addressing for lab resources.
+
+📂 **Current Version**
+- Network Diagram V3: `networking/NETWORK DIAGRAM V3.svg`
+
+
+🔧 Tools & Tech – Week 4
+
+Windows Server – DHCP role removed, DNS alpha records configured
+
+Ubuntu Server – VM deployment, static IP, SSH enabled
+
+VS Code – Remote SSH connection for server management
+
+UFW (Uncomplicated Firewall) – Restrict access to internal network and VPN
+
+Proxmox VE – Hypervisor management, connected via DNS
