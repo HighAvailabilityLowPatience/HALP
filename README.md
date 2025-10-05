@@ -99,3 +99,67 @@ VS Code – Remote SSH connection for server management
 UFW (Uncomplicated Firewall) – Restrict access to internal network and VPN
 
 Proxmox VE – Hypervisor management, connected via DNS
+
+
+
+
+🚀 Home Lab Journey – Week 5 Update
+
+Week 5 focused on setting up Prometheus monitoring and Node Exporter in the home lab:
+
+Proxmox VM Spin-Up: Created a new Linux VM for Prometheus, manually configuring network settings (IP, DNS) to integrate into the lab subnet.
+
+Environment Setup: Enabled OpenSSH for VS Code remote editing. Configured UFW firewall rules to allow necessary ports while maintaining security.
+
+Prometheus Installation:
+
+Downloaded and extracted Prometheus binaries to /home/vireogod/prometheus_install/prometheus.
+
+Configured prometheus.yml with scrape targets (Linux, Windows, bare metal, router) on ports 9100, 9182, etc.
+
+Verified syntax and paths with promtool check config.
+
+Systemd Service:
+
+Created prometheus.service in /etc/systemd/system/.
+
+Defined service parameters: user, executable path, config, storage, console templates, and restart policy.
+
+Enabled and started service with systemctl, troubleshooting path, flag, and port issues.
+
+Node Exporter Setup:
+
+Downloaded and installed Linux node_exporter binaries to /usr/local/bin/.
+
+Verified access via curl http://192.168.**.***:9100/metrics.
+
+Configured UFW to restrict access to the network and VPN.
+
+Validation & Troubleshooting:
+
+Fixed Prometheus service startup errors.
+
+Confirmed Prometheus is actively scraping the Linux VM.
+
+Other targets show DOWN until exporters are installed, which is expected.
+
+Verified TCP connectivity with nc/curl to ensure proper scraping.
+
+✅ Outcome:
+Prometheus is running as a systemd service and successfully scraping the Linux VM. All endpoints are visible in the dashboard, with Linux VM showing UP; other targets remain DOWN until exporters are deployed.
+
+#DevOps #HomeLab #Monitoring #Prometheus #NodeExporter #Linux #Proxmox #LearningByDoing #UFW #SSH
+
+🔧 Tools & Tech – Week 5
+
+Linux VM (Proxmox) – Hosts Prometheus and Node Exporter
+
+Prometheus – Monitoring service, systemd-managed
+
+Node Exporter – Metrics collection for Linux VM
+
+VS Code – Remote SSH for configuration
+
+UFW – Firewall configuration for secure access
+
+Proxmox VE – Hypervisor management
