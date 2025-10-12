@@ -163,3 +163,89 @@ VS Code – Remote SSH for configuration
 UFW – Firewall configuration for secure access
 
 Proxmox VE – Hypervisor management
+
+***** Home Lab Journey – Week 6 Update*******
+
+Week 6 focused on building a full monitoring stack for Linux, Windows, and Proxmox nodes:
+
+Windows Exporter Setup
+
+Installed Windows Exporter on the Windows Server, listening on port 9182 with default collectors.
+
+Verified via curl and Prometheus targets page.
+
+Fixed connectivity issues caused by IP misconfigurations and firewall rules.
+
+Node Exporter Setup on Proxmox
+
+Accessed Proxmox shell for both hypervisors.
+
+Installed Linux AMD64 Node Exporter in /usr/local/bin.
+
+Verified with /usr/local/bin/node_exporter --version.
+
+Opened port 9100 and confirmed Prometheus could scrape metrics.
+
+Prometheus Scrape Configuration
+
+Updated prometheus.yml with targets for Linux VM, Windows Server, Proxmox nodes, and bare-metal servers.
+
+Fixed paths and syntax issues in Prometheus systemd service.
+
+Restarted Prometheus and confirmed all targets were being scraped successfully.
+
+Grafana Dashboard Setup
+
+Installed Grafana on the monitoring VM (port 3000).
+
+Logged in with default credentials, created dashboards, and imported Node Exporter dashboard for Proxmox metrics.
+
+Began creating Windows Exporter dashboard and explored prebuilt vs. custom panels.
+
+Verified Prometheus target health for Windows.
+
+DNS Setup (Windows Server)
+
+Added A records:
+
+monitor.vireo.local → Prometheus VM
+
+windows.vireo.local → Windows Server
+
+Verified using nslookup for easy internal resolution.
+
+Troubleshooting & Learnings
+
+Fixed firewall and port issues across Linux/Proxmox nodes.
+
+Learned Prometheus scraping mechanics and exporter differences.
+
+Explored Grafana dashboard queries, panels, and syslog forwarding options for future expansion.
+
+Achieved full monitoring stack: Linux/Proxmox/Windows metrics reporting to Prometheus; Grafana dashboards for Proxmox ready, Windows panels in progress.
+
+✅ Outcome:
+
+Prometheus scrapes Linux, Windows, and Proxmox nodes.
+
+Grafana is visualizing Proxmox metrics and ready to expand Windows dashboards.
+
+DNS simplified access via monitor.vireo.local and windows.vireo.local.
+
+Windows Exporter functioning; monitoring stack operational.
+
+#DevOps #HomeLab #Monitoring #Prometheus #Grafana #NodeExporter #WindowsExporter #Linux #Proxmox #DNS #LearningByDoing
+
+🔧 Tools & Tech – Week 6
+
+Windows Server – Windows Exporter, DNS configuration
+
+Linux VM / Proxmox nodes – Node Exporter, Prometheus targets
+
+Prometheus – Metrics scraping and systemd service
+
+Grafana – Dashboard creation and visualization
+
+VS Code – Remote SSH management
+
+UFW / Firewalls – Secure access to Prometheus and exporters
