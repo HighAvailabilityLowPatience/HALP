@@ -249,3 +249,94 @@ Grafana – Dashboard creation and visualization
 VS Code – Remote SSH management
 
 UFW / Firewalls – Secure access to Prometheus and exporters
+🚀 Home Lab Journey – Week 7 Update
+
+Week 7 focused on automating the full cloud backup pipeline for Proxmox, integrating Bash and Python scripts to manage snapshots, verification, and S3 replication.
+
+🧭 Initial Goal
+
+Build a hands-free backup workflow for Proxmox VM snapshots.
+
+Route all backup traffic through a WireGuard VPN tunnel to AWS.
+
+Automate snapshot verification and secure uploads to S3 using an EC2 relay instance.
+
+⚠️ Roadblocks & Real-World Lessons
+
+1️⃣ WireGuard Routing Limitations
+
+Issue: The TP-Link BE6500 router cannot route traffic selectively over UDP 51820 — it sends all outbound traffic through its default WAN interface.
+
+Impact: Even with the VPN tunnel active, backup data still exits over the regular interface, breaking the “encrypted-only” backup goal.
+
+Status: The router now successfully initiates the VPN connection outbound to EC2 (bypassing CGNAT), but it cannot enforce routing policies for backup traffic. Further redesign is needed for full isolation.
+
+2️⃣ Rebuilt EC2 Environment
+
+Recreated the EC2 relay instance with controlled IAM roles and SNS alerting.
+
+Simplified network configuration and improved logging for future debugging.
+
+3️⃣ Proxmox Backup Automation
+
+Wrote a custom Bash script to:
+
+Run vzdump backups on schedule.
+
+Perform integrity checks automatically.
+
+Handle retention pruning of old snapshots.
+
+This script forms the foundation of a self-maintaining backup rotation system.
+
+4️⃣ Lambda Automation
+
+Deployed two Python-based Lambda functions:
+
+One to start the EC2 relay instance on schedule.
+
+One to stop the instance after backups complete, reducing AWS costs.
+
+5️⃣ Python Sync Script (rclone Integration)
+
+Developed a Python automation script that:
+
+Auto-retries the VPN connection using wg-quick@wg0 restart.
+
+Runs an additional backup verification step prior to upload.
+
+Executes an rclone push to S3 using AES-256 encryption.
+
+Sends SNS notifications on success or failure.
+
+This script ties together all backup and upload logic into one seamless workflow.
+
+✅ Outcome
+
+Backup automation and verification are now fully functional at the Proxmox level.
+
+EC2 and Lambda orchestration are operational and cost-efficient.
+
+VPN tunnel establishes successfully but requires a future router upgrade or dedicated gateway to properly route S3-bound traffic.
+
+Backup pipeline now runs end-to-end locally; S3 integration is ready pending routing fix.
+
+#DevOps #HomeLab #Automation #Proxmox #AWS #WireGuard #rclone #Lambda #Python #Bash #S3 #SNS #LearningByDoing
+
+🔧 Tools & Tech – Week 7
+
+Proxmox VE – VM snapshot management & vzdump
+
+WireGuard – VPN tunneling between home lab and EC2
+
+AWS EC2 – Backup relay instance
+
+AWS S3 – Cloud backup storage
+
+AWS Lambda + SNS – Automation and notifications
+
+rclone – Encrypted file synchronization
+
+Bash / Python Scripts – Backup logic, integrity checks, VPN retries, S3 uploads
+
+TP-Link BE6500 Router – Current bottleneck for selective VPN routing
