@@ -340,3 +340,53 @@ rclone – Encrypted file synchronization
 Bash / Python Scripts – Backup logic, integrity checks, VPN retries, S3 uploads
 
 TP-Link BE6500 Router – Current bottleneck for selective VPN routing
+
+
+Home Lab Journey – Week 9 Update
+
+Week 9 marked a major leap into MLOps + application deployment with the creation of your first Dockerized backend service, ml_backend, designed for local or EC2 use.
+
+🧠 Project Overview
+
+You now have a working offline inference backend that:
+1️⃣ Accepts text telemetry from network nodes (/predict).
+2️⃣ Runs it through a local Hugging Face sentiment model (DistilBERT, CPU-only).
+3️⃣ Stores results in SQLite for historical analysis and aggregation.
+4️⃣ Exposes multiple health, metrics, and control endpoints for integration with Grafana and Prometheus.
+
+🔗 Reference Repo: https://github.com/HighAvailabilityLowPatience/inference-engine.git
+
+Additional Challenges & Lessons Learned
+
+During the containerization process, I ran into several practical issues that helped me understand how Docker behaves in resource-limited environments.
+
+First, Docker builds were ballooning in size and crashing my Dev VM due to limited disk space and memory. I solved this by moving the entire Docker workflow into GitHub Codespaces, which provides isolated compute resources and prevents local exhaustion.
+
+Next, I noticed that the transformers and torch stack made my container images extremely large. To trim things down, I switched to slim base images and used the --no-cache-dir flag to clean out build caches during installation.
+
+Port conflicts became another lesson — my container kept failing to expose port 8000 because FastAPI was already running locally. Mapping ports explicitly with -p 8000:8000 fixed that issue.
+
+I also learned that data persistence in containers isn’t automatic. My SQLite database was being wiped every rebuild because it lived inside the container, so I mounted a local volume using -v ./db:/app/db to keep data between runs.
+
+To optimize build times, I adjusted my Dockerfile to copy requirements.txt before the source files. This allowed Docker to cache dependency layers instead of reinstalling every time.
+
+GitHub Codespaces also introduced a few network restrictions that blocked certain outbound downloads, so I switched to manually downloading models and copying them locally to keep the build fully offline.
+
+Lastly, I discovered how resource-intensive the Hugging Face model load process can be on smaller systems. Codespaces’ burst compute performance kept the container from crashing and gave me consistent build stability.
+
+These small but critical lessons helped me understand Docker’s behavior, performance tradeoffs, and best practices for building lightweight, reproducible ML containers in constrained environments.
+🔧 Tools & Tech – Week 9
+
+FastAPI – Backend framework
+
+Hugging Face Transformers (DistilBERT) – Offline sentiment model
+
+SQLite – Local storage engine
+
+Python 3.11 – App runtime
+
+Docker – First containerized build of the backend
+
+VS Code + SSH Remote – Development environment
+
+Prometheus / Grafana Ready – Metrics integration
