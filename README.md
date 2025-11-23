@@ -390,3 +390,131 @@ Docker – First containerized build of the backend
 VS Code + SSH Remote – Development environment
 
 Prometheus / Grafana Ready – Metrics integration
+
+
+🚀 Home Lab Journey – Week 10-11 Update
+
+Week 10-11 focused on standing up a fully disposable cloud development environment, producing a reusable AMI template, and validating both Docker services.
+You also began tying the ML backend, Node Agent, and Lovable UI together into a single ecosystem.
+
+☁️ 1. Disposable Cloud Dev Environment
+
+Spun up a fresh EC2 Ubuntu instance dedicated to development.
+
+Installed Python, Docker, Git, and required system packages globally.
+
+Pulled the Inference Engine Repo
+ and configured SSH keys for secure access.
+
+Purpose: a throw-away dev box you can rebuild anytime.
+Status: Fully working.
+
+🧱 2. Reusable AMI Template
+
+Baked the configured EC2 instance into an Amazon Machine Image (AMI) containing Docker, Python, and all dependencies.
+
+Enables one-click deployment of identical environments, drastically reducing setup time.
+Status: Functional and time-saving.
+
+🐳 3. Docker Builds (ml_backend + node_agent)
+
+Both containers now build cleanly with correct paths and dependencies.
+
+Images pushed successfully to GitHub Container Registry (GHCR).
+Status: 100 percent reproducible and deployment-ready.
+
+🧩 4. Portainer Attempt
+
+Tested Portainer for GUI-based container management.
+
+Encountered multiple issues:
+
+Docker socket inaccessible.
+
+Environments stuck in DOWN state.
+
+UI disconnect loops causing debug headaches.
+
+Decision: Removed Portainer and returned to Docker CLI, which proved simpler and more reliable.
+Status: Portainer retired → CLI retained.
+
+⚙️ 5. Backend (FastAPI + Hugging Face Model)
+
+Works: Application boots, /health passes, routes load.
+
+Fails: /predict throws 500 errors, model fallbacks to fake inference, and logs report false success.
+
+Root cause: silent PyTorch / HF exceptions and malformed telemetry payloads.
+Status: Functional framework; inference pipeline still broken. Next step → surface real exceptions and repair model load sequence.
+
+🔗 6. Node Agent
+
+Runs successfully and posts to backend.
+
+Issue: Breaks silently when JSON/config paths are invalid and does not flag upstream errors.
+
+Logs show “success” even when backend fails.
+Status: Operational but too quiet under failure; needs strict validation and loud error reporting.
+
+💜 7. Lovable UI
+
+Generated a complete UI through Lovable that hooks into FastAPI routes.
+
+Successfully built and deployed; awaiting stable backend for integration.
+Status: UI exists but not yet wired into backend. Integration scheduled for next week after backend stabilization.
+
+🧩 Current System Snapshot
+
+I now have a fully assembled cloud-native environment featuring:
+
+Disposable EC2 dev infrastructure.
+
+A reusable AMI template for rapid rebuilds.
+
+Two containerized micro-services (ml_backend, node_agent).
+
+A half-working FastAPI + HF backend.
+
+A Node Agent ready for hardened telemetry and error surfacing.
+
+A Lovable UI layer waiting for integration.
+
+Essentially, the car is built, the engine turns over, but it doesn’t rev cleanly yet.
+
+🔧 Tools & Tech – Week 10-11
+
+AWS EC2 – Disposable dev instances
+
+AWS AMI – Reproducible environment templates
+
+GitHub Codespaces – For Docker builds when local VM fails
+
+FastAPI – Backend service
+
+Hugging Face Transformers – Local inference model
+
+Docker / GHCR – Containerization + registry
+
+Python / Bash – Automation and service scripts
+
+Lovable UI – Frontend layer
+
+📝 Extra Notes / Lessons Learned (PS Section)
+
+Before reaching the cloud workflow, I would hit a major blocker: Docker build ballooning.
+
+My small home-lab Dev VM kept running out of disk space.
+
+PyTorch CPU wheels in the requirements list were too large to download locally.
+
+Builds would fail halfway due to storage exhaustion and model size.
+
+This is what pushed you to adopt an AWS-based development workflow, where you now:
+
+Give myself 80 GB of space whenever you need it
+
+Reproduce environments with one command
+
+Never worrying about storage ballooning, dependency size, or VM crashes
+
+This sharp shift to cloud-based DevOps is a huge leap forward in my workflow maturity.
